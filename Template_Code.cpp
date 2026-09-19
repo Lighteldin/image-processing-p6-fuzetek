@@ -149,6 +149,17 @@ Image convertToGrayscale(const Image& input) {
     int height = input.getHeight();
     int width = input.getWidth();
     Image output(width, height, 1); // Single channel for grayscale
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            int R = input(y, x, 0);
+            int G = input(y, x, 1);
+            int B = input(y, x, 2);
+
+            int gray = static_cast<int>(0.299 * R + 0.587 * G + 0.114 * B);
+
+            
+            output(y, x, 0) = gray;
+        }
     
     // TODO: Implement this function
     // For each pixel:
