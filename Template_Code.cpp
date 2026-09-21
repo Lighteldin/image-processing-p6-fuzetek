@@ -149,6 +149,7 @@ Image convertToGrayscale(const Image& input) {
     int height = input.getHeight();
     int width = input.getWidth();
     Image output(width, height, 1); // Single channel for grayscale
+
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             int R = input(y, x, 0);
@@ -157,16 +158,10 @@ Image convertToGrayscale(const Image& input) {
 
             int gray = static_cast<int>(0.299 * R + 0.587 * G + 0.114 * B);
 
-            
             output(y, x, 0) = gray;
         }
-    
-    // TODO: Implement this function
-    // For each pixel:
-    //   Get R, G, B values from input image
-    //   Calculate gray = 0.299*R + 0.587*G + 0.114*B
-    //   Set output(y, x, 0) = gray
-    
+    }
+
     return output;
 }
 
@@ -208,18 +203,11 @@ Image flipVertical(const Image& input) {
     int width = input.getWidth();
     int channels = input.getChannels();
     Image output(width, height, channels);
-    
-    // TODO: Implement this function
-    // For each pixel and each channel:
-    //   output(height-1-y, x, c) = input(y, x, c)
 
-    for(int h=0; h<height; h++)
-    {
-        for(int w=0; w<width; w++)
-        {
-            for(int c=0; c<channels; c++)
-            {
-                output(height -h -1, w, c) = input(h, w, c);
+    for (int h = 0; h < height; h++) {
+        for (int w = 0; w < width; w++) {
+            for (int c = 0; c < channels; c++) {
+                output(height - h - 1, w, c) = input(h, w, c);
             }
         }
     }
@@ -268,12 +256,16 @@ Image adjustContrast(const Image& input, float factor) {
     int width = input.getWidth();
     int channels = input.getChannels();
     Image output(width, height, channels);
-    
-    // TODO: Implement this function
-    // For each pixel and each channel:
-    //   new_value = factor * (input(y, x, c) - 128) + 128
-    //   output(y, x, c) = max(0, min(255, new_value))
-    
+
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            for (int c = 0; c < channels; c++) {
+                float new_val = factor * (input(y, x, c) - 128) + 128;
+                output(y, x, c) = max(0, min(255, (int)new_val));
+            }
+        }
+    }
+
     return output;
 }
 
