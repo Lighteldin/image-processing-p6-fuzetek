@@ -212,6 +212,17 @@ Image flipVertical(const Image& input) {
     // TODO: Implement this function
     // For each pixel and each channel:
     //   output(height-1-y, x, c) = input(y, x, c)
+
+    for(int h=0; h<height; h++)
+    {
+        for(int w=0; w<width; w++)
+        {
+            for(int c=0; c<channels; c++)
+            {
+                output(height -h -1, w, c) = input(h, w, c);
+            }
+        }
+    }
     
     return output;
 }
